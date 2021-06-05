@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Role extends Model implements AuthenticatableContract, AuthorizableContract
+class Opcion extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
@@ -30,11 +30,10 @@ class Role extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         '',
     ];
-    public function user(){
-        return $this->hasOne(User::class);
+
+    public function rol(){
+        return $this->belongsTO(Role::class);
     }
 
-    public function opciones(){
-        return $this->hasMany(Opcion::  class);
-    }
+    
 }

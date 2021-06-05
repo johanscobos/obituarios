@@ -16,9 +16,7 @@ class UsersController  extends Controller
      */
     public function index()
     {
-       /* $user = new User();
-        $user -> name = 'Sebas';
-        $user -> email = 'johanscobos@gmail.com';*/
+       //muestra todos los usuarios
         $user = User::all();
         return response() -> json([$user], 200);
     }
@@ -28,6 +26,15 @@ class UsersController  extends Controller
         if ($request -> isJson())
         {
             //$user = User::create($request->json()->all());
+
+            $this->validate($request, [
+                'nombres' => 'required',
+                'apellidos' => 'required',
+                'user' => 'required|unique:users',
+                'rolid' => 'required',
+                'password' => 'required'
+            ]);
+
             $user = User::create([
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos,
@@ -39,6 +46,25 @@ class UsersController  extends Controller
             return response()->json([$user], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
+    }
+
+
+    public function updateUser( Request $request,$id)
+    {
+    
+            $infoUser = User::find($id);
+            $infoUser ->save();
+            return response()->json([$infoUser], 201);
+       
+    }
+
+    
+    public function destroyUser( Request $request,$id)
+    {
+    
+            $infoUser = User::destroy($id);
+            return response()->json([$infoUser], 201);
+       
     }
 
     public function getToken (Request $request) //login
