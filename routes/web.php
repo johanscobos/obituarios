@@ -19,10 +19,35 @@ $router->get('/', function () use ($router) {
 
 $router->post('/users/login', ['uses' => 'UsersController@getToken']);
 $router->group(['middleware' => 'auth'], function () use ($router) {
+    //Grupo: Usuarios
     $router->get('/users', ['uses' => 'UsersController@index' ]);
     $router->post('/create', ['uses' => 'UsersController@createUser' ]);
     $router->put('/update/{id}', ['uses' => 'UsersController@updateUser' ]);
     $router->put('/destroy/{id}', ['uses' => 'UsersController@destroyUser' ]);
+
+    //Grupo: Obituarios
+    $router->get('/obituarios', ['uses' => 'ObituariosController@index' ]);
+    $router->post('/obituarios/create', ['uses' => 'ObituariosController@createObituario' ]);
+    $router->put('/obituarios/update/{id}', ['uses' => 'ObituariosController@updateObituario' ]);
+    $router->put('/obituarios/destroy/{id}', ['uses' => 'ObituariosController@destroyObituario' ]);
+
+    //Grupo: Salas
+    $router->get('/salas', ['uses' => 'SalasController@index' ]);
+    $router->post('/salas/create', ['uses' => 'SalasController@createSala' ]);
+    $router->put('/salas/update/{id}', ['uses' => 'SalasController@updateSala' ]);
+    $router->put('/salas/destroy/{id}', ['uses' => 'SalasController@destroySala' ]);
+
+    //Grupo: Sedes
+    $router->get('/sedes', ['uses' => 'SedesController@index' ]);
+    $router->post('/sedes/create', ['uses' => 'SedesController@createSede' ]);
+    $router->put('/sedes/update/{id}', ['uses' => 'SedesController@updateSede' ]);
+    $router->put('/sedes/destroy/{id}', ['uses' => 'SedesController@destroySede' ]);
+
+    //Grupo: Ubicaciones
+    $router->get('/ubicaciones', ['uses' => 'UbicacionesController@index' ]);
+    $router->post('/ubicaciones/create', ['uses' => 'UbicacionesController@createUbicacion' ]);
+    $router->put('/ubicaciones/update/{id}', ['uses' => 'UbicacionesController@updateUbicacion' ]);
+    $router->put('/ubicaciones/destroy/{id}', ['uses' => 'UbicacionesController@destroyUbicacion' ]);
 });
 
 
