@@ -32,7 +32,7 @@ class Opcion extends Model implements AuthenticatableContract, AuthorizableContr
     ];
 
     public function rol(){
-        return $this->belongsTO(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
     
