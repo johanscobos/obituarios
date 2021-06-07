@@ -9,18 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Role extends Model 
+class RoleOpcion extends Model
 {
-    
+   
 
-    public $table = 'roles';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-       'roleid', 'descripcion'
+        'role_id','opcion_id'
     ];  
 
     /**
@@ -31,12 +30,7 @@ class Role extends Model
     protected $hidden = [
         '',
     ];
-   
-    public function users(){
-        return $this->belongsToMany(User::class, 'role_users');
-    }
 
-    public function opciones(){
-        return $this->belongsToMany(Opcion::  class,'role_opciones');
-    }
+
+    
 }

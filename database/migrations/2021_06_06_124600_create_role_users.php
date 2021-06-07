@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleidOpcionidTable extends Migration
+class CreateRoleUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateRoleidOpcionidTable extends Migration
      */
     public function up()
     {
-        Schema::create('roleid_opcionid', function (Blueprint $table) {
+        Schema::create('role_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('rolid');
-            $table->unsignedBigInteger('opcionid');
-            $table->foreign('rolid')->references('id')->on('roles');
-            $table->foreign('opcionid')->references('id')->on('opciones');
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateRoleidOpcionidTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roleid_opcionid');
+        Schema::dropIfExists('role_users');
     }
 }

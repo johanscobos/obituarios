@@ -17,12 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('nombres');
             $table->string('apellidos');
-            $table->string('user');
+            $table->string('username');
             $table->string('password');
-            $table->unsignedBigInteger('rolid');
             $table->string('api_token',60)->unique();
             $table->timestamps();
-            $table->foreign('rolid')->references('id')->on('roles');
+            
         });
     }
 

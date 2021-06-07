@@ -13,13 +13,14 @@ class Opcion extends Model implements AuthenticatableContract, AuthorizableContr
 {
     use Authenticatable, Authorizable, HasFactory;
 
+    public $table = 'opciones';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'descripcion'
+        'tituloopcion'
     ];  
 
     /**
@@ -31,8 +32,8 @@ class Opcion extends Model implements AuthenticatableContract, AuthorizableContr
         '',
     ];
 
-    public function rol(){
-        return $this->belongsToMany(Role::class);
+    public function roles(){
+        return $this->belongsToMany(Role::class,'role_opciones');
     }
 
     

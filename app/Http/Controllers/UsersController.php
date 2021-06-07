@@ -25,12 +25,12 @@ class UsersController  extends Controller
     {
         if ($request -> isJson())
         {
-            //$user = User::create($request->json()->all());
+        
 
             $this->validate($request, [
                 'nombres' => 'required',
                 'apellidos' => 'required',
-                'user' => 'required|unique:users',
+                'username' => 'required|unique:users',
                 'rolid' => 'required',
                 'password' => 'required'
             ]);
@@ -38,23 +38,27 @@ class UsersController  extends Controller
             $user = User::create([
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos,
-                'user' => $request->user,
-                'rolid' => $request->rolid,
+                'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'api_token' => str_random(60)
             ]);
+            $user->roles()->attach($request->rolid);      
+            
             return response()->json([$user], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
 
 
-    public function updateUser( Request $request,$id)
+    public function updateUser($id, Request $request)
     {
         if ($request -> isJson())
         {
             $infoUser = User::find($id);
-            $infoUser ->save();
+            $infoUser-> nombres=$request->input('nombres');
+            $infoUser-> apellidos=$request->input('apellidos');
+            $infoUser-> username=$request->input('username');
+            $infoUser-> password=$request->input('password');
             return response()->json([$infoUser], 201);
         }
         return response()->json(['Error' => 'No está autorizado'],401);
@@ -77,7 +81,7 @@ class UsersController  extends Controller
         {
           try{
               $data = $request -> json() -> all();
-              $user = User::where('user',$data['user'])->first();
+              $user = User::where('username',$data['username'])->first();
 
               if ($user && Hash::check ($data['password'],$user->password)){
                   return response()->json($user,200);

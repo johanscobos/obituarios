@@ -16,9 +16,7 @@ class CreateOpcionesTable extends Migration
         Schema::create('opciones', function (Blueprint $table) {
             $table->id();
             $table->string('tituloopcion');
-            $table->unsignedBigInteger('rolid');
             $table->timestamps();
-            $table->foreign('rolid')->references('id')->on('roles');
         });
     }
 

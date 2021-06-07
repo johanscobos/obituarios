@@ -17,45 +17,39 @@ class RoleController  extends Controller
     public function index()
     {
        //muestra todos los roles
-        $user = Role::all();
-        return response() -> json([$user], 200);
+        $role = Role::all();
+        return response() -> json([$role], 200);
     }
 
     public function createRole(Request $request)
     {
         if ($request -> isJson())
         {
-            //$user = User::create($request->json()->all());
 
             $this->validate($request, [
-                'nombres' => 'required',
-                'apellidos' => 'required',
-                'user' => 'required|unique:users',
-                'rolid' => 'required',
-                'password' => 'required'
+                'roleid' => 'required',
+                'descripcion' => 'required'
             ]);
 
-            $user = User::create([
-                'nombres' => $request->nombres,
-                'apellidos' => $request->apellidos,
-                'user' => $request->user,
-                'rolid' => $request->rolid,
-                'password' => Hash::make($request->password),
-                'api_token' => str_random(60)
+            $role = Role::create([
+                'roleid' => $request->roleid,
+                'descripcion' => $request->descripcion,
             ]);
-            return response()->json([$user], 201);
+            return response()->json([$role], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
 
 
-    public function updateRole( Request $request,$id)
+    public function updateRole($id, Request $request)
     {
         if ($request -> isJson())
         {
-            $infoUser = User::find($id);
-            $infoUser ->save();
-            return response()->json([$infoUser], 201);
+            $infoRole = Role::find($id);
+            $infoRole-> roleid=$request->input('roleid');
+            $infoRole-> descripcion=$request->input('descripcion');
+            $infoRole ->save();
+            return response()->json([$infoRole], 201);
         }
         return response()->json(['Error' => 'No está autorizado'],401);
     }
@@ -63,12 +57,10 @@ class RoleController  extends Controller
     
     public function destroyRole( Request $request,$id)
     {
-        if ($request -> isJson())
-        {
-            $infoUser = User::destroy($id);
-            return response()->json([$infoUser], 201);
-        }
-        return response()->json(['Error' => 'No está autorizado'],401);
+        
+            $infoRole = Role::destroy($id);
+            return response()->json([$infoRole], 201);
+    
     }
 
 }
