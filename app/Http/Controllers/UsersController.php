@@ -33,7 +33,8 @@ class UsersController  extends Controller
                 'username' => 'required|unique:users',
                 'rolid' => 'required',
                 'password' => 'required'
-            ]);
+            ],['unique' => 'Nombre de usuario no disponible.',
+               'required' =>'El campo es obligatorio.']);
 
             $user = User::create([
                 'nombres' => $request->nombres,
@@ -59,6 +60,7 @@ class UsersController  extends Controller
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
             $infoUser-> password=$request->input('password');
+            $infoUser->save();
             return response()->json([$infoUser], 201);
         }
         return response()->json(['Error' => 'No está autorizado'],401);
