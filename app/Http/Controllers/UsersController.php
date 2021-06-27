@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\RoleUser;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +42,8 @@ class UsersController  extends Controller
                 'apellidos' => $request->apellidos,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'api_token' => str_random(60)
+                'api_token' => str_random(60),
+                'estadoid'=>1
             ]);
             $user->roles()->attach($request->rolid);      
             
@@ -59,7 +61,7 @@ class UsersController  extends Controller
             $infoUser-> nombres=$request->input('nombres');
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
-            $infoUser-> password=$request->input('password');
+            $infoUser-> password = Hash::make($request->input('password'));
             $infoUser->save();
             return response()->json([$infoUser], 201);
         }
@@ -67,14 +69,17 @@ class UsersController  extends Controller
     }
 
     
-    public function destroyUser( Request $request,$id)
+    public function destroyUser($id)
     {
-        if ($request -> isJson())
-        {
-            $infoUser = User::destroy($id);
-            return response()->json([$infoUser], 201);
-        }
-        return response()->json(['Error' => 'No está autorizado'],401);
+       
+            $infoUser = RoleUser::find($id);
+            $infoUser->delete();
+            $infoUser2 = User::find($id);
+            $infoUser2-> estadoid=0;
+            $infoUser2->save();
+            return response()->json([$infoUser2], 201);
+            
+    
     }
 
     public function getToken (Request $request) //login

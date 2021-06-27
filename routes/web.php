@@ -23,7 +23,7 @@ $router->get('/', function () use ($router) {
     $router->post('/user/create', ['uses' => 'UsersController@createUser' ]);
     $router->put('/user/update/{id}', ['uses' => 'UsersController@updateUser' ]);
     $router->put('/user/destroy/{id}', ['uses' => 'UsersController@destroyUser' ]);
-
+    //});
 
     $router->post('/role/create', ['uses' => 'RoleController@createRole' ]);
     $router->put('/role/update/{id}', ['uses' => 'RoleController@updateRole' ]);
