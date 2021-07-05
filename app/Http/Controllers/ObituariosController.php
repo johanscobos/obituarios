@@ -14,6 +14,7 @@ class ObituariosController  extends Controller
      *
      * @return void
      */
+    
     public function index()
     {
        //muestra todos los usuarios

@@ -15,10 +15,18 @@ class CreateObituariosTable extends Migration
     {
         Schema::create('obituarios', function (Blueprint $table) {
             $table->id();
-            $table->string('ciudad');
-            $table->string('sede');
-            $table->string('mensaje');
             $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('ciudad');
+            $table->integer('sedeid');
+            $table->integer('salaid');
+            $table->string('misa');
+            $table->date('fechaexequias');
+            $table->integer('cementerioid');
+            $table->string('virtual');
+            $table->string('url');
+            $table->date('iniciopublicacion');
+            $table->date('finpublicacion');
             $table->timestamps();
         });
     }

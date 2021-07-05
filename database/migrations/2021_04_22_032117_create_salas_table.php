@@ -15,10 +15,10 @@ class CreateSalasTable extends Migration
     {
         Schema::create('salas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres_sala');
+            $table->string('nombresala');
+            $table->integer('sedeid');
             $table->string('direccion');
             $table->string('telefono');
-            $table->string('password');
             $table->timestamps();
         });
     }

@@ -18,7 +18,6 @@ class CreateUbicacionesTable extends Migration
             $table->string('Pais');
             $table->string('Ciudad');
             $table->string('Departamento');
-            $table->string('Direccion');
             $table->timestamps();
         });
     }
