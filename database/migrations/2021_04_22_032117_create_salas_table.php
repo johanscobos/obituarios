@@ -19,6 +19,7 @@ class CreateSalasTable extends Migration
             $table->integer('sedeid');
             $table->string('direccion');
             $table->string('telefono');
+            $table->integer('ipid');
             $table->timestamps();
         });
     }

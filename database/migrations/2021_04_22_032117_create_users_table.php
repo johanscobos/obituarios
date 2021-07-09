@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('api_token',60)->unique();
             $table->integer('estadoid');
+            $table->softDeletes();
             $table->timestamps();
             
         });

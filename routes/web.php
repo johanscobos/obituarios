@@ -20,11 +20,13 @@ $router->get('/', function () use ($router) {
     $router->post('/users/login', ['uses' => 'UsersController@getToken']);
   //$router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/user/show', ['uses' => 'UsersController@index' ]);
+    $router->get('/user/showRole', ['uses' => 'UsersController@getroleuser' ]);
     $router->post('/user/create', ['uses' => 'UsersController@createUser' ]);
     $router->put('/user/update/{id}', ['uses' => 'UsersController@updateUser' ]);
     $router->put('/user/destroy/{id}', ['uses' => 'UsersController@destroyUser' ]);
     //});
 
+    $router->get('/role/show', ['uses' => 'RoleController@index' ]);
     $router->post('/role/create', ['uses' => 'RoleController@createRole' ]);
     $router->put('/role/update/{id}', ['uses' => 'RoleController@updateRole' ]);
     $router->put('/role/destroy/{id}', ['uses' => 'RoleController@destroyRole' ]);
@@ -36,6 +38,7 @@ $router->get('/', function () use ($router) {
 
     //Grupo: Obituarios
     $router->get('/obituario/show', ['uses' => 'ObituariosController@index' ]);
+    $router->get('/obituario/showobithome', ['uses' => 'ObituariosController@showObituariosHome' ]);
     $router->post('/obituarios/create', ['uses' => 'ObituariosController@createObituario' ]);
     $router->put('/obituarios/update/{id}', ['uses' => 'ObituariosController@updateObituario' ]);
     $router->put('/obituarios/destroy/{id}', ['uses' => 'ObituariosController@destroyObituario' ]);

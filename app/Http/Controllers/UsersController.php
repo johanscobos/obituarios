@@ -7,6 +7,8 @@ use App\Models\RoleUser;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 class UsersController  extends Controller
 {
@@ -20,6 +22,16 @@ class UsersController  extends Controller
        //muestra todos los usuarios
         $user = User::all();
         return response() -> json([$user], 200);
+    }
+
+    public function getroleuser()
+    {
+        $role = DB::table('users') 
+                    ->join('role_users','users.id', '=', 'role_users.user_id')
+                    ->join('roles','role_users.role_id', '=', 'roles.roleid')
+                    ->select('users.*','roles.roleid','roles.descripcion')
+                    ->get();
+        return response() -> json($role,200);
     }
 
     public function createUser(Request $request)
@@ -63,7 +75,10 @@ class UsersController  extends Controller
             $infoUser-> username=$request->input('username');
             $infoUser-> password = Hash::make($request->input('password'));
             $infoUser->save();
-            return response()->json([$infoUser], 201);
+            $role = RoleUser::find($id);
+            $role->role_id=$request->input('rolid');
+            $role->save();
+            return response()->json($infoUser, 201);
         }
         return response()->json(['Error' => 'No está autorizado'],401);
     }
@@ -72,11 +87,8 @@ class UsersController  extends Controller
     public function destroyUser($id)
     {
        
-            $infoUser = RoleUser::find($id);
+            $infoUser = RoleUser::findOrFail($id);
             $infoUser->delete();
-            $infoUser2 = User::find($id);
-            $infoUser2-> estadoid=0;
-            $infoUser2->save();
             return response()->json([$infoUser2], 201);
             
     

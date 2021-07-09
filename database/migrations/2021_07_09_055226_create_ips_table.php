@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSedesTable extends Migration
+class CreateIpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSedesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sedes', function (Blueprint $table) {
+        Schema::create('ips', function (Blueprint $table) {
             $table->id();
-            $table->string('nombresede');
-            $table->string('direccion');
-            $table->string('telefono');
-            $table->string('ciudad');
+            $table->string('direccionip');
+            $table->string('usuario');
+            $table->string('clave');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateSedesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sedes');
+        Schema::dropIfExists('ips');
     }
 }

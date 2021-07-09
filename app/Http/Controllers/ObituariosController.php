@@ -6,6 +6,7 @@ use App\Models\Obituario;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ObituariosController  extends Controller
 {
@@ -22,6 +23,17 @@ class ObituariosController  extends Controller
         return response() -> json([$obituario], 200);
     }
 
+    public function showObituariosHome(){
+        $obituario = DB::table('obituarios') 
+        ->join('sedes','obituarios.sedeid', '=', 'sedes.id')
+        ->join('salas','obituarios.salaid', '=', 'salas.id')
+        ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
+        ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
+        ->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias')
+        ->get();
+        return response() -> json($obituario,200);
+        }
+    
     public function createObituario(Request $request)
     {
         if ($request -> isJson())
