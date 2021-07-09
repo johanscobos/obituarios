@@ -62,7 +62,7 @@ class UsersController  extends Controller
             return response()->json([$user], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
-    }
+    }   
 
 
     public function updateUser($id, Request $request)
@@ -87,9 +87,13 @@ class UsersController  extends Controller
     public function destroyUser($id)
     {
        
-            $infoUser = RoleUser::findOrFail($id);
+            /*$infoUser = User::find($id);
             $infoUser->delete();
-            return response()->json([$infoUser2], 201);
+            return response()->json($infoUser2, 201);*/
+            return $this
+        ->belongsToMany('role_users')
+        ->whereNull('users') // Table `group_user` has column `deleted_at`
+        ->withTimestamps();
             
     
     }

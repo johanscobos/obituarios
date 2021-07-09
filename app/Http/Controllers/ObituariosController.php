@@ -29,7 +29,8 @@ class ObituariosController  extends Controller
         ->join('salas','obituarios.salaid', '=', 'salas.id')
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
-        ->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias')
+        ->join('ips','salas.ipid' = 'ips.id')
+        ->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias','ips.direccionip','ig.ciudad')
         ->get();
         return response() -> json($obituario,200);
         }
@@ -41,18 +42,37 @@ class ObituariosController  extends Controller
             //$user = User::create($request->json()->all());
 
             $this->validate($request, [
-                'ciudad' => 'required',
-                'sede' => 'required',
-                'nombre' => 'required'
+                'nombre' => 'required',
+                'apellidos' => 'required',
+                'ciudadid' => 'required',
+                'sedeid' => 'required',
+                'salaid' => 'required',
+                'iglesiaid' => 'required',
+                'horamisa' => 'required',
+                'cementerioid' => 'required',
+                'fechaexequias' => 'required',
+                'virtual' => 'required',
+                'iniciopublicacion' => 'required',
+                'finpublicacion' => 'required'
             ]);
 
             $obituario = Obituario::create([
-                'ciudad' => $request->ciudad,
-                'sede' => $request->sede,
+                'nombre' => $request->nombre,
+                'apellidos' => $request->apellidos,
                 'mensaje' => $request->mensaje,
-                'nombre' => $request->nombre
+                'ciudadid' => $request->ciudadid,
+                'sedeid' => $request->sedeid,
+                'salaid' => $request->salaid,
+                'iglesiaid' => $request->iglesiaid,
+                'horamisa' => $request->horamisa,
+                'cementerioid' => $request->cementerioid,
+                'horadestinofinal' => $request->horadestinofinal,
+                'fechaexequias' => $request->fechaexequias,
+                'virtual' => $request->virtual,
+                'iniciopublicacion' => $request->iniciopublicacion,
+                'finpublicacion' => $request->finpublicacion,
             ]);
-            return response()->json([$obituario], 201);
+            return response()->json($obituario, 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
