@@ -29,10 +29,11 @@ class ObituariosController  extends Controller
         ->join('salas','obituarios.salaid', '=', 'salas.id')
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
-        ->join('ips','salas.ipid' = 'ips.id')
-        ->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias','ips.direccionip','ig.ciudad')
+        ->join('ips','salas.ipid','=','ips.id')
+        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,ips.direccionip,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion'))
+        //->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','iglesias.id','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias','ips.direccionip','iglesias.ciudad')
         ->get();
-        return response() -> json($obituario,200);
+        return response() -> json([$obituario],200);
         }
     
     public function createObituario(Request $request)
@@ -82,11 +83,11 @@ class ObituariosController  extends Controller
     {
     
             $infoObituario = Obituario::find($id);
-            $infoObituario-> ciudad=$request->input('ciudad');
+            /*$infoObituario-> ciudad=$request->input('ciudad');
             $infoObituario-> sede=$request->input('sede');
             $infoObituario-> mensaje=$request->input('mensaje');
             $infoObituario-> nombre=$request->input('nombre');
-            $infoObituario ->save();
+            $infoObituario ->save();*/
             return response()->json([$infoObituario], 201);
        
     }

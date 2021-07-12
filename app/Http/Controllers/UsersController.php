@@ -87,13 +87,10 @@ class UsersController  extends Controller
     public function destroyUser($id)
     {
        
-            /*$infoUser = User::find($id);
+            $infoUser = User::findOrFail($id);
             $infoUser->delete();
-            return response()->json($infoUser2, 201);*/
-            return $this
-        ->belongsToMany('role_users')
-        ->whereNull('users') // Table `group_user` has column `deleted_at`
-        ->withTimestamps();
+            return response()->json($infoUser2, 201);
+            
             
     
     }

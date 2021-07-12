@@ -8,11 +8,12 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model 
 {
     
-
+    use SoftDeletes;
     public $table = 'roles';
     /**
      * The attributes that are mass assignable.

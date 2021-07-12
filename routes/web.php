@@ -34,7 +34,7 @@ $router->get('/', function () use ($router) {
     $router->get('/opcion/show', ['uses' => 'OpcionController@index' ]);
     $router->post('/opcion/create', ['uses' => 'OpcionController@createOpcion' ]);
     $router->put('/opcion/update/{id}', ['uses' => 'OpcionController@updateOpcion' ]);
-    $router->put('/opcion/destroy/{id}', ['uses' => 'OpcionController@destroyOpcion' ]);
+    $router->delete('/opcion/destroy/{id}', ['uses' => 'OpcionController@destroyOpcion' ]);
 
     //Grupo: Obituarios
     $router->get('/obituario/show', ['uses' => 'ObituariosController@index' ]);
