@@ -30,8 +30,7 @@ class ObituariosController  extends Controller
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
         ->join('ips','salas.ipid','=','ips.id')
-        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,ips.direccionip,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion'))
-        //->select('obituarios.nombre','obituarios.apellidos','obituarios.mensaje','sedes.nombresede','salas.nombresala','iglesias.nombre','iglesias.id','obituarios.horamisa','cementerios.nombre','obituarios.horadestinofinal','obituarios.virtual','obituarios.fechaexequias','ips.direccionip','iglesias.ciudad')
+        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,ips.direccionip,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion,salas.direccion as direccionsala,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio'))
         ->get();
         return response() -> json([$obituario],200);
         }
@@ -40,8 +39,6 @@ class ObituariosController  extends Controller
     {
         if ($request -> isJson())
         {
-            //$user = User::create($request->json()->all());
-
             $this->validate($request, [
                 'nombre' => 'required',
                 'apellidos' => 'required',
@@ -52,7 +49,6 @@ class ObituariosController  extends Controller
                 'horamisa' => 'required',
                 'cementerioid' => 'required',
                 'fechaexequias' => 'required',
-                'virtual' => 'required',
                 'iniciopublicacion' => 'required',
                 'finpublicacion' => 'required'
             ]);
@@ -69,7 +65,7 @@ class ObituariosController  extends Controller
                 'cementerioid' => $request->cementerioid,
                 'horadestinofinal' => $request->horadestinofinal,
                 'fechaexequias' => $request->fechaexequias,
-                'virtual' => $request->virtual,
+                'virtual' =>$request->virtual,
                 'iniciopublicacion' => $request->iniciopublicacion,
                 'finpublicacion' => $request->finpublicacion,
             ]);
@@ -83,11 +79,21 @@ class ObituariosController  extends Controller
     {
     
             $infoObituario = Obituario::find($id);
-            /*$infoObituario-> ciudad=$request->input('ciudad');
-            $infoObituario-> sede=$request->input('sede');
-            $infoObituario-> mensaje=$request->input('mensaje');
             $infoObituario-> nombre=$request->input('nombre');
-            $infoObituario ->save();*/
+            $infoObituario-> apellidos=$request->input('apellidos');
+            $infoObituario-> mensaje=$request->input('mensaje');
+            $infoObituario-> ciudadid=$request->input('ciudadid');
+            $infoObituario-> sedeid=$request->input('sedeid');
+            $infoObituario-> salaid=$request->input('salaid');
+            $infoObituario-> iglesiaid=$request->input('iglesiaid');
+            $infoObituario-> horamisa=$request->input('horamisa');
+            $infoObituario-> cementerioid=$request->input('cementerioid');
+            $infoObituario-> horadestinofinal=$request->input('horadestinofinal');
+            $infoObituario-> fechaexequias=$request->input('fechaexequias');
+            $infoObituario-> virtual=$request->input('virtual');
+            $infoObituario-> iniciopublicacion=$request->input('iniciopublicacion');
+            $infoObituario-> finpublicacion=$request->input('finpublicacion');
+            $infoObituario ->save();
             return response()->json([$infoObituario], 201);
        
     }
