@@ -28,16 +28,14 @@ class SalasController  extends Controller
             //$user = User::create($request->json()->all());
 
             $this->validate($request, [
-                'nombres_sala' => 'required',
-                'telefono' => 'required',
-                'password' => 'required'
+                'nombresala' => 'required',
+                'sedeid' => 'required'                
             ]);
 
             $sala = Sala::create([
-                'nombres_sala' => $request->nombres_sala,
-                'direccion' => $request->direccion,
-                'telefono' => $request->telefono,
-                'password' => $request->password
+                'nombresala' => $request->nombresala,
+                'sedeid' => $request->sedeid,
+                'ipid' => $request->ipid
             ]);
             return response()->json([$sala], 201);
         }
@@ -49,10 +47,9 @@ class SalasController  extends Controller
     {
     
             $infoSala = Sala::find($id);
-            $infoSala-> nombres_sala=$request->input('nombres_sala');
-            $infoSala-> direccion=$request->input('direccion');
-            $infoSala-> telefono=$request->input('telefono');
-            $infoSala-> password=$request->input('password');
+            $infoSala-> nombresala=$request->input('nombresala');
+            $infoSala-> sedeid=$request->input('sedeid');
+            $infoSala-> ipid=$request->input('ipid');
             $infoSala ->save();
             return response()->json([$infoSala], 201);
        

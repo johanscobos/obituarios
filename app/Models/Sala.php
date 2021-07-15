@@ -19,7 +19,7 @@ class Sala extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'nombres_sala', 'direccion','telefono','password'
+        'nombresala','sedeid','ipid'
     ];  
 
     /**

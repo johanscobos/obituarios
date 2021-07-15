@@ -44,7 +44,7 @@ $router->get('/', function () use ($router) {
     $router->put('/obituarios/destroy/{id}', ['uses' => 'ObituariosController@destroyObituario' ]);
 
     //Grupo: Salas
-    $router->get('/salas', ['uses' => 'SalasController@index' ]);
+    $router->get('/salas/show', ['uses' => 'SalasController@index' ]);
     $router->post('/salas/create', ['uses' => 'SalasController@createSala' ]);
     $router->put('/salas/update/{id}', ['uses' => 'SalasController@updateSala' ]);
     $router->put('/salas/destroy/{id}', ['uses' => 'SalasController@destroySala' ]);

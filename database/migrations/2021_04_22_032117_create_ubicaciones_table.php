@@ -15,9 +15,12 @@ class CreateUbicacionesTable extends Migration
     {
         Schema::create('ubicaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('Pais');
-            $table->string('Ciudad');
-            $table->string('Departamento');
+            $table->integer('idpais');
+            $table->string('pais');
+            $table->integer('idciudad');
+            $table->string('ciudad');
+            $table->integer('iddepartamento');
+            $table->string('departamento');
             $table->timestamps();
         });
     }
