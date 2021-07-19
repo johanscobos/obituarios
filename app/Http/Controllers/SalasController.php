@@ -29,7 +29,7 @@ class SalasController  extends Controller
 
             $this->validate($request, [
                 'nombresala' => 'required',
-                'sedeid' => 'required'                
+                'sedeid' => 'required'
             ]);
 
             $sala = Sala::create([

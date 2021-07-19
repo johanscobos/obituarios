@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sede;
+use App\Models\Iglesia;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class SedesController  extends Controller
+class IglesiasController  extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,43 +17,42 @@ class SedesController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $sede = Sede::all();
-        return response() -> json([$sede], 200);
+        $iglesia = Iglesia::all();
+        return response() -> json([$iglesia], 200);
     }
 
-    public function createSede(Request $request)
+    public function createIglesia(Request $request)
     {
         if ($request -> isJson())
         {
             //$user = User::create($request->json()->all());
 
             $this->validate($request, [
-                'nombresede' => 'required',
-                'direccion' => 'required'
+                'nombre' => 'required',
+                'direccion' => 'required',
+                'ciudad' => 'required'
             ]);
 
-            $sede = Sede::create([
-                'nombresede' => $request->nombresede,
+            $iglesia = Iglesia::create([
+                'nombre' => $request->nombre,
                 'direccion' => $request->direccion,
-                'telefono' => $request->telefono,
                 'ciudad' => $request->ciudad
             ]);
-            return response()->json([$sede], 201);
+            return response()->json([$iglesia], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
 
 
-    public function updateSede( $id, Request $request)
+    public function updateIglesia( $id, Request $request)
     {
     
-            $infoSede = Sede::find($id);
-            $infoSede-> nombresede=$request->input('nombresede');
-            $infoSede-> direccion=$request->input('direccion');
-            $infoSede-> telefono=$request->input('telefono');
-            $infoSede-> ciudad=$request->input('ciudad');
-            $infoSede ->save();
-            return response()->json([$infoSede], 201);
+            $infoIglesia = Iglesia::find($id);
+            $infoIglesia-> nombre=$request->input('nombre');
+            $infoIglesia-> direccion=$request->input('direccion');
+            $infoIglesia-> ciudad=$request->input('ciudad');
+            $infoIglesia ->save();
+            return response()->json([$infoIglesia], 201);
        
     }
 
