@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Sede extends Model implements AuthenticatableContract, AuthorizableContract
+class Iglesia extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
-    /**
+    /**     
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'nombresede','direccion','telefono','ciudad'
+        'nombre','direccion','ciudad'
     ];  
 
     /**

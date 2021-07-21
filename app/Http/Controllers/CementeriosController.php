@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sede;
+use App\Models\Cementerio;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class SedesController  extends Controller
+class CementeriosController  extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,40 +17,39 @@ class SedesController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $sede = Sede::all();
-        return response() -> json([$sede], 200);
+        $cementerio = Cementerio::all();
+        return response() -> json([$cementerio], 200);
     }
 
-    public function createSede(Request $request)
+    public function createCementerio(Request $request)
     {
         if ($request -> isJson())
         {
             //$user = User::create($request->json()->all());
 
             $this->validate($request, [
-                'nombresede' => 'required',
-                'direccion' => 'required'
+                'nombre' => 'required',
+                'direccion' => 'required',
+                'ciudad' => 'required'
             ]);
 
-            $sede = Sede::create([
-                'nombresede' => $request->nombresede,
+            $cementerio = Cementerio::create([
+                'nombre' => $request->nombre,
                 'direccion' => $request->direccion,
-                'telefono' => $request->telefono,
                 'ciudad' => $request->ciudad
             ]);
-            return response()->json([$sede], 201);
+            return response()->json([$cementerio], 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
 
 
-    public function updateSede( $id, Request $request)
+    public function updateCementerio( $id, Request $request)
     {
     
-            $infoSede = Sede::find($id);
-            $infoSede-> nombresede=$request->input('nombresede');
+            $infoSede = Cementerio::find($id);
+            $infoSede-> nombre=$request->input('nombre');
             $infoSede-> direccion=$request->input('direccion');
-            $infoSede-> telefono=$request->input('telefono');
             $infoSede-> ciudad=$request->input('ciudad');
             $infoSede ->save();
             return response()->json([$infoSede], 201);
