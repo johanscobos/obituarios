@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ObituariosController  extends Controller
 {
@@ -24,13 +25,15 @@ class ObituariosController  extends Controller
     }
 
     public function showObituariosHome(){
+        $date = Carbon::now()->toDateTimeString();
         $obituario = DB::table('obituarios') 
+        // ->where('finpublicacion', '>=', $date)
         ->join('sedes','obituarios.sedeid', '=', 'sedes.id')
         ->join('salas','obituarios.salaid', '=', 'salas.id')
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
         ->join('ips','salas.ipid','=','ips.id')
-        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,ips.direccionip,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion,salas.direccion as direccionsala,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio'))
+        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,ips.direccionip,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio,sedes.direccion as direccionsedes'))
         ->get();
         return response() -> json([$obituario],200);
         }
