@@ -13,7 +13,7 @@ class Cementerio extends Model implements AuthenticatableContract, AuthorizableC
 {
     use Authenticatable, Authorizable, HasFactory;
 
-    /**
+    /**     
      * The attributes that are mass assignable.
      *
      * @var array
