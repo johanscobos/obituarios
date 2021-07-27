@@ -8,20 +8,18 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model 
+class Ip extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    
-   
-    public $table = 'roles';
+    use Authenticatable, Authorizable, HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-       'roleid', 'descripcion'
+        'direccionip','usuario','clave'
     ];  
 
     /**
@@ -32,12 +30,6 @@ class Role extends Model
     protected $hidden = [
         '',
     ];
-   
-    public function users(){
-        return $this->belongsToMany(User::class, 'role_users');
-    }
 
-    public function opciones(){
-        return $this->belongsToMany(Opcion::  class,'role_opciones');
-    }
+    
 }

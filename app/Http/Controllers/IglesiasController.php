@@ -6,6 +6,7 @@ use App\Models\Iglesia;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class IglesiasController  extends Controller
 {
@@ -17,7 +18,10 @@ class IglesiasController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $iglesia = Iglesia::all();
+       $iglesia = DB::table('iglesias') 
+       ->join('ubicaciones','iglesias.ciudad', '=', 'ubicaciones.id')
+       ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ubicaciones.ciudad as ciudadiglesia'))
+       ->get();
         return response() -> json([$iglesia], 200);
     }
 
