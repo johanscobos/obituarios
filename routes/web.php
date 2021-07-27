@@ -68,8 +68,11 @@ $router->get('/', function () use ($router) {
      $router->put('/iglesias/destroy/{id}', ['uses' => 'IglesiasController@destroyIglesia' ]);
 
     //Grupo: Ubicaciones
-    $router->get('/ubicaciones', ['uses' => 'UbicacionesController@index' ]);
+    $router->get('/ubicaciones/show', ['uses' => 'UbicacionesController@index' ]);
     $router->post('/ubicaciones/create', ['uses' => 'UbicacionesController@createUbicacion' ]);
     $router->put('/ubicaciones/update/{id}', ['uses' => 'UbicacionesController@updateUbicacion' ]);
     $router->put('/ubicaciones/destroy/{id}', ['uses' => 'UbicacionesController@destroyUbicacion' ]);
+
+    //Grupo: IPS
+    $router->get('/ips/show', ['uses' => 'IpsController@index' ]);
 //});
