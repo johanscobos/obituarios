@@ -6,6 +6,7 @@ use App\Models\Cementerio;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class CementeriosController  extends Controller
 {
@@ -17,7 +18,10 @@ class CementeriosController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $cementerio = Cementerio::all();
+       $cementerio = DB::table('cementerios') 
+       ->join('ubicaciones','cementerios.ciudad', '=', 'ubicaciones.id')
+       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ubicaciones.ciudad as ciudadcementerio'))
+       ->get();
         return response() -> json([$cementerio], 200);
     }
 

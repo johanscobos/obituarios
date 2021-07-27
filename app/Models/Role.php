@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model 
 {
     
-    use SoftDeletes;
+   
     public $table = 'roles';
     /**
      * The attributes that are mass assignable.

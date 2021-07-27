@@ -6,23 +6,20 @@ use App\Models\Ip;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
-class IpsController extends Controller
+class IpsController  extends Controller
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-   
     public function index()
     {
-       //muestra todos las ips
+       //muestra todos los usuarios
         $ip = Ip::all();
         return response() -> json([$ip], 200);
     }
-
 
     public function createIp(Request $request)
     {
@@ -32,7 +29,8 @@ class IpsController extends Controller
 
             $this->validate($request, [
                 'direccionip' => 'required',
-               
+                'usuario' => 'required',
+                'clave' => 'required'
             ]);
 
             $ip = Ip::create([
@@ -46,7 +44,7 @@ class IpsController extends Controller
     }
 
 
-    public function updateSala( $id, Request $request)
+    public function updateIp( $id, Request $request)
     {
     
             $infoIp = Ip::find($id);
@@ -54,22 +52,18 @@ class IpsController extends Controller
             $infoIp-> usuario=$request->input('usuario');
             $infoIp-> clave=$request->input('clave');
             $infoIp ->save();
-            return response()->json([$infoSala], 201);
-       
-    }
-
-    
-    public function destroySala($id, Request $request)
-    {
-    
-            $infoIp = Ip::destroy($id);
             return response()->json([$infoIp], 201);
        
     }
 
     
+    public function destroyIp($id, Request $request)
+    {
+    
+            $infoSala = Sala::destroy($id);
+            return response()->json([$infoSala], 201);
+       
+    }
+
+    
 }
-
-
-    //
-

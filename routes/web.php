@@ -73,6 +73,10 @@ $router->get('/', function () use ($router) {
     $router->put('/ubicaciones/update/{id}', ['uses' => 'UbicacionesController@updateUbicacion' ]);
     $router->put('/ubicaciones/destroy/{id}', ['uses' => 'UbicacionesController@destroyUbicacion' ]);
 
+
     //Grupo: IPS
     $router->get('/ips/show', ['uses' => 'IpsController@index' ]);
+    $router->post('/ips/create', ['uses' => 'IpsController@createIp' ]);
+    $router->put('/ips/update/{id}', ['uses' => 'IpsController@updateIp' ]);
+    $router->put('/ips/destroy/{id}', ['uses' => 'IpsController@destroyIp' ]);
 //});

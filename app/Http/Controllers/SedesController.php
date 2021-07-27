@@ -6,6 +6,7 @@ use App\Models\Sede;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class SedesController  extends Controller
 {
@@ -17,7 +18,10 @@ class SedesController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $sede = Sede::all();
+       $sede = DB::table('sedes') 
+       ->join('ubicaciones','sedes.ciudad', '=', 'ubicaciones.id')
+       ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ubicaciones.ciudad as ciudadsede'))
+       ->get();
         return response() -> json([$sede], 200);
     }
 

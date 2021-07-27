@@ -17,7 +17,7 @@ class CreateSalasTable extends Migration
             $table->id();
             $table->string('nombresala');
             $table->integer('sedeid');
-            $table->integer('ipid')->nullable();
+            $table->string('ipid');
             $table->timestamps();
         });
     }

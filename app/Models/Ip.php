@@ -19,7 +19,7 @@ class Ip extends Model implements AuthenticatableContract, AuthorizableContract
      * @var array
      */
     protected $fillable = [
-        'direccionip'
+        'direccionip','usuario','clave'
     ];  
 
     /**

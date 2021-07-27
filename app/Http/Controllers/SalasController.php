@@ -6,6 +6,7 @@ use App\Models\Sala;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class SalasController  extends Controller
 {
@@ -16,8 +17,11 @@ class SalasController  extends Controller
      */
     public function index()
     {
-       //muestra todos los usuarios
-        $sala = Sala::all();
+        $sala = DB::table('salas') 
+        ->join('ips','salas.ipid', '=', 'ips.id')
+        ->join('sedes','salas.sedeid','=','sedes.id')
+        ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, sedes.id as sedeid,sedes.nombresede as nombresede, ips.id as ipid,ips.direccionip as direccionip'))
+        ->get();
         return response() -> json([$sala], 200);
     }
 
