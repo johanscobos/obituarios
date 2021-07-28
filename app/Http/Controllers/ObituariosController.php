@@ -33,7 +33,7 @@ class ObituariosController  extends Controller
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
         ->join('ubicaciones','obituarios.ciudadid','=','ubicaciones.id')
-        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion ,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio, ubicaciones.ciudad as ciudadobituario'))
+        ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,iglesias.ciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion ,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio, ubicaciones.ciudad as ciudadobituario,ubicaciones.id as ciudadid'))
         ->get();
         return response() -> json([$obituario],200);
         }

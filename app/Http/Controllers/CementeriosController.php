@@ -20,7 +20,7 @@ class CementeriosController  extends Controller
        //muestra todos los usuarios
        $cementerio = DB::table('cementerios') 
        ->join('ubicaciones','cementerios.ciudad', '=', 'ubicaciones.id')
-       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ubicaciones.ciudad as ciudadcementerio'))
+       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ubicaciones.ciudad as ciudadcementerio, ubicaciones.id  as ciudadid'))
        ->get();
         return response() -> json([$cementerio], 200);
     }
