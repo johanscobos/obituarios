@@ -18,11 +18,11 @@ class SalasController  extends Controller
     public function index()
     {
         $sala = DB::table('salas') 
-        ->join('ips','salas.ipid', '=', 'ips.id')
         ->join('sedes','salas.sedeid','=','sedes.id')
-        ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, sedes.id as sedeid,sedes.nombresede as nombresede, ips.id as ipid,ips.direccionip as direccionip'))
+        ->whereNull('salas.deleted_at')
+        ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, salas.direccionip as direccionip, sedes.id as sedeid,sedes.nombresede as nombresede'))
         ->get();
-        return response() -> json([$sala], 200);
+        return response() -> json($sala, 200);
     }
 
     public function createSala(Request $request)
@@ -33,13 +33,14 @@ class SalasController  extends Controller
 
             $this->validate($request, [
                 'nombresala' => 'required',
-                'sedeid' => 'required'
+                'sedeid' => 'required',
+                'direccionip'=> array('regex:/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/')
             ]);
 
             $sala = Sala::create([
                 'nombresala' => $request->nombresala,
                 'sedeid' => $request->sedeid,
-                'ipid' => $request->ipid
+                'direccionip' => $request->direccionip
             ]);
             return response()->json([$sala], 201);
         }
@@ -53,7 +54,7 @@ class SalasController  extends Controller
             $infoSala = Sala::find($id);
             $infoSala-> nombresala=$request->input('nombresala');
             $infoSala-> sedeid=$request->input('sedeid');
-            $infoSala-> ipid=$request->input('ipid');
+            $infoSala-> ipid=$request->input('direccionip');
             $infoSala ->save();
             return response()->json([$infoSala], 201);
        

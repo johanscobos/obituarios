@@ -19,6 +19,7 @@ class CreateSedesTable extends Migration
             $table->string('direccion');
             $table->string('telefono');
             $table->string('ciudad');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

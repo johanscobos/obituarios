@@ -20,8 +20,14 @@ class UsersController  extends Controller
     public function index()
     {
        //muestra todos los usuarios
-        $user = User::all();
-        return response() -> json([$user], 200);
+        //$user = User::all();
+        $user = DB::table('users')
+                  ->join('role_users','users.id','=','role_users.user_id')
+                  ->join('roles','role_users.role_id', '=', 'roles.roleid')
+                  ->whereNull('users.deleted_at')
+                  ->select('users.*','roles.roleid','roles.descripcion')
+                  ->get();      
+        return response() -> json($user, 200);
     }
 
     public function getroleuser()
@@ -31,6 +37,7 @@ class UsersController  extends Controller
                     ->join('roles','role_users.role_id', '=', 'roles.roleid')
                     ->select('users.*','roles.roleid','roles.descripcion')
                     ->get();
+        
         return response() -> json($role,200);
     }
 
@@ -45,7 +52,8 @@ class UsersController  extends Controller
                 'apellidos' => 'required',
                 'username' => 'required|unique:users',
                 'rolid' => 'required',
-                'password' => 'required'
+                'password' => 'required',
+                'ciudad' => 'required'
             ],['unique' => 'Nombre de usuario no disponible.',
                'required' =>'El campo es obligatorio.']);
 
@@ -55,6 +63,7 @@ class UsersController  extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'api_token' => str_random(60),
+                'ciudad' => $request->ciudad,
                 'estadoid'=>1
             ]);
             $user->roles()->attach($request->rolid);      
@@ -74,6 +83,7 @@ class UsersController  extends Controller
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
             $infoUser-> password = Hash::make($request->input('password'));
+            $infoUser-> ciudad=$request->input('ciudad');
             $infoUser->save();
             $role = RoleUser::find($id);
             $role->role_id=$request->input('rolid');
@@ -86,28 +96,29 @@ class UsersController  extends Controller
     
     public function destroyUser($id)
     {
-       
-            $infoUser = User::findOrFail($id);
-            $infoUser->delete();
-            return response()->json($infoUser2, 201);
-            
-            
-    
+            $usr= User::find($id);
+            $usr->delete();
+            return response()->json('ok', 201);
     }
 
     public function getToken (Request $request) //login
-    {
+    {   
         if ($request -> isJson())
         {
           try{
               $data = $request -> json() -> all();
-              $user = User::where('username',$data['username'])->first();
+              $user= DB::table('users') 
+                    ->where('username',$data['username'])
+                    ->join('role_users','users.id', '=', 'role_users.user_id')
+                    ->join('roles','role_users.role_id', '=', 'roles.roleid')
+                    ->select('users.*','role_users.*')
+                    ->first();
 
               if ($user && Hash::check ($data['password'],$user->password)){
                   return response()->json($user,200);
               }else{
                   return response()->json(['Error' => 'No existe el usuario'],406);
-              }
+             }
           }
           catch(ModelNotFoundException $e){
             return response()->json(['Error' => 'No contenido'],406);

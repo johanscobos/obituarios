@@ -20,6 +20,7 @@ class IglesiasController  extends Controller
        //muestra todos los usuarios
        $iglesia = DB::table('iglesias') 
        ->join('ubicaciones','iglesias.ciudad', '=', 'ubicaciones.id')
+       ->whereNull('iglesias.deleted_at')
        ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ubicaciones.ciudad as ciudadiglesia,ubicaciones.id as ciudadid'))
        ->get();
         return response() -> json([$iglesia], 200);
@@ -42,7 +43,7 @@ class IglesiasController  extends Controller
                 'direccion' => $request->direccion,
                 'ciudad' => $request->ciudad
             ]);
-            return response()->json([$iglesia], 201);
+            return response()->json($iglesia, 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
@@ -61,11 +62,11 @@ class IglesiasController  extends Controller
     }
 
     
-    public function destroySede($id, Request $request)
+    public function destroyIglesia($id, Request $request)
     {
-    
-            $infoSede = Sede::destroy($id);
-            return response()->json([$infoSede], 201);
+            $infoIglesia= Iglesia::find($id);
+            $infoIglesia->delete();
+            return response()->json('ok', 201);
        
     }
 

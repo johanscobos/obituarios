@@ -29,7 +29,7 @@ $router->get('/', function () use ($router) {
     $router->get('/role/show', ['uses' => 'RoleController@index' ]);
     $router->post('/role/create', ['uses' => 'RoleController@createRole' ]);
     $router->put('/role/update/{id}', ['uses' => 'RoleController@updateRole' ]);
-    $router->put('/role/destroy/{id}', ['uses' => 'RoleController@destroyRole' ]);
+    $router->delete('/role/destroy/{id}', ['uses' => 'RoleController@destroyRole' ]);
 
     $router->get('/opcion/show', ['uses' => 'OpcionController@index' ]);
     $router->post('/opcion/create', ['uses' => 'OpcionController@createOpcion' ]);
@@ -41,42 +41,36 @@ $router->get('/', function () use ($router) {
     $router->get('/obituario/showobithome', ['uses' => 'ObituariosController@showObituariosHome' ]);
     $router->post('/obituarios/create', ['uses' => 'ObituariosController@createObituario' ]);
     $router->put('/obituarios/update/{id}', ['uses' => 'ObituariosController@updateObituario' ]);
-    $router->put('/obituarios/destroy/{id}', ['uses' => 'ObituariosController@destroyObituario' ]);
+    $router->delete('/obituarios/destroy/{id}', ['uses' => 'ObituariosController@destroyObituario' ]);
 
     //Grupo: Salas
     $router->get('/salas/show', ['uses' => 'SalasController@index' ]);
     $router->post('/salas/create', ['uses' => 'SalasController@createSala' ]);
     $router->put('/salas/update/{id}', ['uses' => 'SalasController@updateSala' ]);
-    $router->put('/salas/destroy/{id}', ['uses' => 'SalasController@destroySala' ]);
+    $router->delete('/salas/destroy/{id}', ['uses' => 'SalasController@destroySala' ]);
 
     //Grupo: Sedes
     $router->get('/sedes/show', ['uses' => 'SedesController@index' ]);
     $router->post('/sedes/create', ['uses' => 'SedesController@createSede' ]);
     $router->put('/sedes/update/{id}', ['uses' => 'SedesController@updateSede' ]);
-    $router->put('/sedes/destroy/{id}', ['uses' => 'SedesController@destroySede' ]);
+    $router->delete('/sedes/destroy/{id}', ['uses' => 'SedesController@destroySede' ]);
 
      //Grupo: Cementerios
      $router->get('/cementerios/show', ['uses' => 'CementeriosController@index' ]);
      $router->post('/cementerios/create', ['uses' => 'CementeriosController@createCementerio' ]);
      $router->put('/cementerios/update/{id}', ['uses' => 'CementeriosController@updateCementerio' ]);
-     $router->put('/cementerios/destroy/{id}', ['uses' => 'CementeriosController@destroyCementerio' ]);
+     $router->delete('/cementerios/destroy/{id}', ['uses' => 'CementeriosController@destroyCementerio' ]);
 
     //Grupo: Iglesias
      $router->get('/iglesias/show', ['uses' => 'IglesiasController@index' ]);
      $router->post('/iglesias/create', ['uses' => 'IglesiasController@createIglesia' ]);
      $router->put('/iglesias/update/{id}', ['uses' => 'IglesiasController@updateIglesia' ]);
-     $router->put('/iglesias/destroy/{id}', ['uses' => 'IglesiasController@destroyIglesia' ]);
+     $router->delete('/iglesias/destroy/{id}', ['uses' => 'IglesiasController@destroyIglesia' ]);
 
     //Grupo: Ubicaciones
     $router->get('/ubicaciones/show', ['uses' => 'UbicacionesController@index' ]);
     $router->post('/ubicaciones/create', ['uses' => 'UbicacionesController@createUbicacion' ]);
     $router->put('/ubicaciones/update/{id}', ['uses' => 'UbicacionesController@updateUbicacion' ]);
-    $router->put('/ubicaciones/destroy/{id}', ['uses' => 'UbicacionesController@destroyUbicacion' ]);
+    $router->delete('/ubicaciones/destroy/{id}', ['uses' => 'UbicacionesController@destroyUbicacion' ]);
 
-
-    //Grupo: IPS
-    $router->get('/ips/show', ['uses' => 'IpsController@index' ]);
-    $router->post('/ips/create', ['uses' => 'IpsController@createIp' ]);
-    $router->put('/ips/update/{id}', ['uses' => 'IpsController@updateIp' ]);
-    $router->put('/ips/destroy/{id}', ['uses' => 'IpsController@destroyIp' ]);
 //});

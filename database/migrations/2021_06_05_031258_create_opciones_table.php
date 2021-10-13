@@ -16,6 +16,7 @@ class CreateOpcionesTable extends Migration
         Schema::create('opciones', function (Blueprint $table) {
             $table->id();
             $table->string('tituloopcion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

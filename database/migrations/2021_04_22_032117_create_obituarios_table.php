@@ -29,6 +29,7 @@ class CreateObituariosTable extends Migration
             $table->char('virtual');
             $table->date('iniciopublicacion');
             $table->date('finpublicacion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -16,7 +16,6 @@ class UbicacionesController  extends Controller
      */
     public function index()
     {
-       //muestra todos los usuarios
         $ubicacion = Ubicacion::all();
         return response() -> json([$ubicacion], 200);
     }

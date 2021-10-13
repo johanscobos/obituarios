@@ -20,6 +20,7 @@ class CementeriosController  extends Controller
        //muestra todos los usuarios
        $cementerio = DB::table('cementerios') 
        ->join('ubicaciones','cementerios.ciudad', '=', 'ubicaciones.id')
+       ->whereNull('cementerios.deleted_at')
        ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ubicaciones.ciudad as ciudadcementerio, ubicaciones.id  as ciudadid'))
        ->get();
         return response() -> json([$cementerio], 200);
@@ -42,7 +43,7 @@ class CementeriosController  extends Controller
                 'direccion' => $request->direccion,
                 'ciudad' => $request->ciudad
             ]);
-            return response()->json([$cementerio], 201);
+            return response()->json($cementerio, 201);
         }
         return response()->json(['Error' => 'No está autorizado'], 401, []);
     }
@@ -51,21 +52,21 @@ class CementeriosController  extends Controller
     public function updateCementerio( $id, Request $request)
     {
     
-            $infoSede = Cementerio::find($id);
-            $infoSede-> nombre=$request->input('nombre');
-            $infoSede-> direccion=$request->input('direccion');
-            $infoSede-> ciudad=$request->input('ciudad');
-            $infoSede ->save();
-            return response()->json([$infoSede], 201);
+            $infoCementerio = Cementerio::find($id);
+            $infoCementerio-> nombre=$request->input('nombre');
+            $infoCementerio-> direccion=$request->input('direccion');
+            $infoCementerio-> ciudad=$request->input('ciudad');
+            $infoCementerio ->save();
+            return response()->json([$infoCementerio], 201);
        
     }
 
     
-    public function destroySede($id, Request $request)
+    public function destroyCementerio($id, Request $request)
     {
-    
-            $infoSede = Sede::destroy($id);
-            return response()->json([$infoSede], 201);
+        $infoCementerio= Cementerio::find($id);
+        $infoCementerio->delete();
+        return response()->json('ok', 201);
        
     }
 

@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->integer('roleid');
             $table->string('descripcion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

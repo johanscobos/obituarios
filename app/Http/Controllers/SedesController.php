@@ -20,6 +20,7 @@ class SedesController  extends Controller
        //muestra todos los usuarios
        $sede = DB::table('sedes') 
        ->join('ubicaciones','sedes.ciudad', '=', 'ubicaciones.id')
+       ->whereNull('sedes.deleted_at')
        ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ubicaciones.ciudad as ciudadsede, ubicaciones.id as ciudadid'))
        ->get();
         return response() -> json([$sede], 200);

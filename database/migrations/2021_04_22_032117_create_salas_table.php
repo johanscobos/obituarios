@@ -17,7 +17,8 @@ class CreateSalasTable extends Migration
             $table->id();
             $table->string('nombresala');
             $table->integer('sedeid');
-            $table->string('ipid');
+            $table->string('direccionip');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
