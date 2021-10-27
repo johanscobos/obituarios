@@ -17,7 +17,7 @@ class CreateCementeriosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('direccion');
-            $table->string('ciudad');
+            $table->integer('idciudad');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ class Sede extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'nombresede','direccion','telefono','ciudad'
+        'nombresede','direccion','telefono','idciudad'
     ];  
 
     /**

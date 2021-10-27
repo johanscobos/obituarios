@@ -15,14 +15,27 @@ class SalasController  extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($id)
+    {
+        $sala = DB::table('salas') 
+        ->join('sedes','salas.sedeid','=','sedes.id')
+        ->join('ciudades','sedes.idciudad','=','ciudades.id')
+        ->join('departamentos','ciudades.iddepartamento','=','departamentos.id')
+        ->where('departamentos.iddepartamento','=',$id)
+        ->whereNull('salas.deleted_at')
+        ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, salas.direccionip as direccionip, sedes.id as sedeid,sedes.nombresede as nombresede'))
+        ->get();
+        return response() -> json([$sala], 200);
+    }
+
+    public function getAll()
     {
         $sala = DB::table('salas') 
         ->join('sedes','salas.sedeid','=','sedes.id')
         ->whereNull('salas.deleted_at')
         ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, salas.direccionip as direccionip, sedes.id as sedeid,sedes.nombresede as nombresede'))
         ->get();
-        return response() -> json($sala, 200);
+        return response() -> json([$sala], 200);
     }
 
     public function createSala(Request $request)
@@ -54,7 +67,7 @@ class SalasController  extends Controller
             $infoSala = Sala::find($id);
             $infoSala-> nombresala=$request->input('nombresala');
             $infoSala-> sedeid=$request->input('sedeid');
-            $infoSala-> ipid=$request->input('direccionip');
+            $infoSala-> direccionip=$request->input('direccionip');
             $infoSala ->save();
             return response()->json([$infoSala], 201);
        

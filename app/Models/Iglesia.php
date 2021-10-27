@@ -20,7 +20,7 @@ class Iglesia extends Model implements AuthenticatableContract, AuthorizableCont
      * @var array
      */
     protected $fillable = [
-        'nombre','direccion','ciudad'
+        'nombre','direccion','idciudad'
     ];  
 
     /**

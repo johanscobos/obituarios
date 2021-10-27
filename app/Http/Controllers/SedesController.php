@@ -15,13 +15,26 @@ class SedesController  extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($id)
     {
        //muestra todos los usuarios
        $sede = DB::table('sedes') 
-       ->join('ubicaciones','sedes.ciudad', '=', 'ubicaciones.id')
+       ->join('ciudades','sedes.idciudad', '=', 'ciudades.id')
+       ->join('departamentos','ciudades.iddepartamento','=','departamentos.id')
+       ->where('departamentos.iddepartamento','=',$id)
        ->whereNull('sedes.deleted_at')
-       ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ubicaciones.ciudad as ciudadsede, ubicaciones.id as ciudadid'))
+       ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ciudades.nombreciudad as ciudadsede, ciudades.idciudad as ciudadid,ciudades.id as ciud'))
+       ->get();
+        return response() -> json([$sede], 200);
+    }
+
+    public function getAll()
+    {
+       //muestra todos los usuarios
+       $sede = DB::table('sedes') 
+       ->join('ciudades','sedes.idciudad', '=', 'ciudades.id')
+       ->whereNull('sedes.deleted_at')
+       ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ciudades.nombreciudad as ciudadsede, ciudades.idciudad as ciudadid,ciudades.id as ciud'))
        ->get();
         return response() -> json([$sede], 200);
     }
@@ -34,14 +47,15 @@ class SedesController  extends Controller
 
             $this->validate($request, [
                 'nombresede' => 'required',
-                'direccion' => 'required'
+                'direccion' => 'required',
+                'ciudad' => 'required'
             ]);
 
             $sede = Sede::create([
                 'nombresede' => $request->nombresede,
                 'direccion' => $request->direccion,
                 'telefono' => $request->telefono,
-                'ciudad' => $request->ciudad
+                'idciudad' => $request->ciudad
             ]);
             return response()->json([$sede], 201);
         }
@@ -56,7 +70,7 @@ class SedesController  extends Controller
             $infoSede-> nombresede=$request->input('nombresede');
             $infoSede-> direccion=$request->input('direccion');
             $infoSede-> telefono=$request->input('telefono');
-            $infoSede-> ciudad=$request->input('ciudad');
+            $infoSede-> idciudad=$request->input('ciudad');
             $infoSede ->save();
             return response()->json([$infoSede], 201);
        

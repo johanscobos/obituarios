@@ -15,13 +15,26 @@ class IglesiasController  extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($id)
     {
        //muestra todos los usuarios
        $iglesia = DB::table('iglesias') 
-       ->join('ubicaciones','iglesias.ciudad', '=', 'ubicaciones.id')
+       ->join('ciudades','iglesias.idciudad', '=', 'ciudades.id')
+       ->join('departamentos','ciudades.iddepartamento','=','departamentos.id')
+       ->where('departamentos.iddepartamento',$id)
        ->whereNull('iglesias.deleted_at')
-       ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ubicaciones.ciudad as ciudadiglesia,ubicaciones.id as ciudadid'))
+       ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ciudades.nombreciudad as ciudadiglesia,ciudades.idciudad as ciudadid,ciudades.id as idci'))
+       ->get();
+        return response() -> json([$iglesia], 200);
+    }
+
+    public function getAll()
+    {
+       //muestra todos los usuarios
+       $iglesia = DB::table('iglesias') 
+       ->join('ciudades','iglesias.idciudad', '=', 'ciudades.id')
+       ->whereNull('iglesias.deleted_at')
+       ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ciudades.nombreciudad as ciudadiglesia,ciudades.idciudad as ciudadid,ciudades.id as idci'))
        ->get();
         return response() -> json([$iglesia], 200);
     }
@@ -41,7 +54,7 @@ class IglesiasController  extends Controller
             $iglesia = Iglesia::create([
                 'nombre' => $request->nombre,
                 'direccion' => $request->direccion,
-                'ciudad' => $request->ciudad
+                'idciudad' => $request->ciudad
             ]);
             return response()->json($iglesia, 201);
         }
@@ -55,7 +68,7 @@ class IglesiasController  extends Controller
             $infoIglesia = Iglesia::find($id);
             $infoIglesia-> nombre=$request->input('nombre');
             $infoIglesia-> direccion=$request->input('direccion');
-            $infoIglesia-> ciudad=$request->input('ciudad');
+            $infoIglesia-> idciudad=$request->input('ciudad');
             $infoIglesia ->save();
             return response()->json([$infoIglesia], 201);
        
