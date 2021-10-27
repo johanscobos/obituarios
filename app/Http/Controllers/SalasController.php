@@ -22,7 +22,7 @@ class SalasController  extends Controller
         ->whereNull('salas.deleted_at')
         ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, salas.direccionip as direccionip, sedes.id as sedeid,sedes.nombresede as nombresede'))
         ->get();
-        return response() -> json($sala, 200);
+        return response() -> json([$sala], 200);
     }
 
     public function createSala(Request $request)
@@ -54,7 +54,7 @@ class SalasController  extends Controller
             $infoSala = Sala::find($id);
             $infoSala-> nombresala=$request->input('nombresala');
             $infoSala-> sedeid=$request->input('sedeid');
-            $infoSala-> ipid=$request->input('direccionip');
+            $infoSala-> direccionip=$request->input('direccionip');
             $infoSala ->save();
             return response()->json([$infoSala], 201);
        

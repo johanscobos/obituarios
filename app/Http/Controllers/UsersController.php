@@ -63,7 +63,7 @@ class UsersController  extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'api_token' => str_random(60),
-                'ciudad' => $request->ciudad,
+                'iddepartamento' => $request->ciudad,
                 'estadoid'=>1
             ]);
             $user->roles()->attach($request->rolid);      
@@ -83,7 +83,7 @@ class UsersController  extends Controller
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
             $infoUser-> password = Hash::make($request->input('password'));
-            $infoUser-> ciudad=$request->input('ciudad');
+            $infoUser-> iddepartamento=$request->input('ciudad');
             $infoUser->save();
             $role = RoleUser::find($id);
             $role->role_id=$request->input('rolid');
