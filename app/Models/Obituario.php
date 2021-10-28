@@ -20,7 +20,7 @@ class Obituario extends Model implements AuthenticatableContract, AuthorizableCo
      * @var array
      */
     protected $fillable = [
-        'nombre', 'apellidos','mensaje','ciudadid','sedeid','salaid','iglesiaid','horamisa','cementerioid','horadestinofinal','fechaexequias','virtual','iniciopublicacion','finpublicacion'
+        'nombre', 'apellidos','mensaje','idciudad','sedeid','salaid','iglesiaid','horamisa','cementerioid','horadestinofinal','fechaexequias','virtual','iniciopublicacion','finpublicacion'
     ];  
 
     /**

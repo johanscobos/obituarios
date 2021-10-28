@@ -51,7 +51,7 @@ class UsersController  extends Controller
                 'nombres' => 'required',
                 'apellidos' => 'required',
                 'username' => 'required|unique:users',
-                'rolid' => 'required',
+                'roleid' => 'required',
                 'password' => 'required',
                 'ciudad' => 'required'
             ],['unique' => 'Nombre de usuario no disponible.',
@@ -63,10 +63,10 @@ class UsersController  extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'api_token' => str_random(60),
-                'iddepartamento' => $request->ciudad,
+                'idciudad' => $request->ciudad,
                 'estadoid'=>1
             ]);
-            $user->roles()->attach($request->rolid);      
+            $user->roles()->attach($request->roleid);      
             
             return response()->json([$user], 201);
         }
@@ -82,11 +82,12 @@ class UsersController  extends Controller
             $infoUser-> nombres=$request->input('nombres');
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
+            //$infoUser-> departamento=$request->input('departamento');
+            $infoUser-> idciudad=$request->input('ciudad');
             $infoUser-> password = Hash::make($request->input('password'));
-            $infoUser-> iddepartamento=$request->input('ciudad');
             $infoUser->save();
             $role = RoleUser::find($id);
-            $role->role_id=$request->input('rolid');
+            $role->role_id=$request->input('roleid');
             $role->save();
             return response()->json($infoUser, 201);
         }
@@ -111,7 +112,9 @@ class UsersController  extends Controller
                     ->where('username',$data['username'])
                     ->join('role_users','users.id', '=', 'role_users.user_id')
                     ->join('roles','role_users.role_id', '=', 'roles.roleid')
-                    ->select('users.*','role_users.*')
+                    ->join('ciudades','users.idciudad','=','ciudades.id')
+                    ->join('departamentos','ciudades.iddepartamento','=','departamentos.id')
+                    ->select('users.*','role_users.*','departamentos.*')
                     ->first();
 
               if ($user && Hash::check ($data['password'],$user->password)){

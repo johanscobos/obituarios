@@ -15,13 +15,26 @@ class CementeriosController  extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($id)
     {
        //muestra todos los usuarios
        $cementerio = DB::table('cementerios') 
-       ->join('ubicaciones','cementerios.ciudad', '=', 'ubicaciones.id')
+       ->join('ciudades','cementerios.idciudad', '=', 'ciudades.id')
+       ->join('departamentos','ciudades.iddepartamento','=','departamentos.id')
+       ->where('departamentos.iddepartamento',$id)
        ->whereNull('cementerios.deleted_at')
-       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ubicaciones.ciudad as ciudadcementerio, ubicaciones.id  as ciudadid'))
+       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ciudades.nombreciudad as ciudadcementerio, ciudades.idciudad  as ciudadid, ciudades.id as idci'))
+       ->get();
+        return response() -> json([$cementerio], 200);
+    }
+
+    public function getAll()
+    {
+       //muestra todos los usuarios
+       $cementerio = DB::table('cementerios') 
+       ->join('ciudades','cementerios.idciudad', '=', 'ciudades.id')
+       ->whereNull('cementerios.deleted_at')
+       ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ciudades.nombreciudad as ciudadcementerio, ciudades.idciudad  as ciudadid, ciudades.id as idci'))
        ->get();
         return response() -> json([$cementerio], 200);
     }
@@ -41,7 +54,7 @@ class CementeriosController  extends Controller
             $cementerio = Cementerio::create([
                 'nombre' => $request->nombre,
                 'direccion' => $request->direccion,
-                'ciudad' => $request->ciudad
+                'idciudad' => $request->ciudad
             ]);
             return response()->json($cementerio, 201);
         }
@@ -55,7 +68,7 @@ class CementeriosController  extends Controller
             $infoCementerio = Cementerio::find($id);
             $infoCementerio-> nombre=$request->input('nombre');
             $infoCementerio-> direccion=$request->input('direccion');
-            $infoCementerio-> ciudad=$request->input('ciudad');
+            $infoCementerio-> idciudad=$request->input('ciudad');
             $infoCementerio ->save();
             return response()->json([$infoCementerio], 201);
        

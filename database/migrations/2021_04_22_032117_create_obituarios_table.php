@@ -18,7 +18,7 @@ class CreateObituariosTable extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('mensaje');
-            $table->string('ciudadid');
+            $table->string('idciudad');
             $table->integer('sedeid');
             $table->integer('salaid');
             $table->string('iglesiaid');
