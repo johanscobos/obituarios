@@ -48,7 +48,7 @@ class SalasController  extends Controller
                 'nombresala' => 'required',
                 'sedeid' => 'required',
                 'direccionip'=> array('regex:/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/')
-            ]);
+            ],['required' =>'El campo es obligatorio.','regex'=>'Formato de direccion ip incorrecto(###.###.###).']);
 
             $sala = Sala::create([
                 'nombresala' => $request->nombresala,

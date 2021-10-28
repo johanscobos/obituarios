@@ -49,7 +49,7 @@ class IglesiasController  extends Controller
                 'nombre' => 'required',
                 'direccion' => 'required',
                 'ciudad' => 'required'
-            ]);
+            ],['required' =>'El campo es obligatorio.']);
 
             $iglesia = Iglesia::create([
                 'nombre' => $request->nombre,

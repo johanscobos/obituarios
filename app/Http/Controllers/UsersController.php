@@ -78,11 +78,14 @@ class UsersController  extends Controller
     {
         if ($request -> isJson())
         {
+            $this->validate($request, [
+                'password' => 'required'
+            ],['required' =>'El campo es obligatorio.']);
+           
             $infoUser = User::find($id);
             $infoUser-> nombres=$request->input('nombres');
             $infoUser-> apellidos=$request->input('apellidos');
             $infoUser-> username=$request->input('username');
-            //$infoUser-> departamento=$request->input('departamento');
             $infoUser-> idciudad=$request->input('ciudad');
             $infoUser-> password = Hash::make($request->input('password'));
             $infoUser->save();

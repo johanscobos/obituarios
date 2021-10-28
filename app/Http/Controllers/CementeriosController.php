@@ -49,7 +49,7 @@ class CementeriosController  extends Controller
                 'nombre' => 'required',
                 'direccion' => 'required',
                 'ciudad' => 'required'
-            ]);
+            ],['required' =>'El campo es obligatorio.']);
 
             $cementerio = Cementerio::create([
                 'nombre' => $request->nombre,

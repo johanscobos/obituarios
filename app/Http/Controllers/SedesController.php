@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sede;
+use App\Models\Sala;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -49,7 +50,7 @@ class SedesController  extends Controller
                 'nombresede' => 'required',
                 'direccion' => 'required',
                 'ciudad' => 'required'
-            ]);
+            ],['required' =>'El campo es obligatorio.']);
 
             $sede = Sede::create([
                 'nombresede' => $request->nombresede,
@@ -81,8 +82,11 @@ class SedesController  extends Controller
     {
     
             $infoSede = Sede::destroy($id);
+            $salas = Sala::where('sedeid',$id)->get();
+            $infoSala= Sala::destroy($salas);
+            
             return response()->json([$infoSede], 201);
-       
+   
     }
 
     
