@@ -36,6 +36,7 @@ class SedesController  extends Controller
        ->join('ciudades','sedes.idciudad', '=', 'ciudades.id')
        ->whereNull('sedes.deleted_at')
        ->select(DB::raw('sedes.id as sedeid, sedes.nombresede,sedes.direccion as direccionsede, sedes.telefono as telefonosede,ciudades.nombreciudad as ciudadsede, ciudades.idciudad as ciudadid,ciudades.id as ciud'))
+       ->orderBy('sedes.id', 'desc')
        ->get();
         return response() -> json([$sede], 200);
     }

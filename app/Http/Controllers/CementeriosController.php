@@ -35,6 +35,7 @@ class CementeriosController  extends Controller
        ->join('ciudades','cementerios.idciudad', '=', 'ciudades.id')
        ->whereNull('cementerios.deleted_at')
        ->select(DB::raw('cementerios.id as cementerioid, cementerios.nombre as nombrecementerio,cementerios.direccion direccioncementerio,ciudades.nombreciudad as ciudadcementerio, ciudades.idciudad  as ciudadid, ciudades.id as idci'))
+       ->orderBy('cementerios.id', 'desc')
        ->get();
         return response() -> json([$cementerio], 200);
     }

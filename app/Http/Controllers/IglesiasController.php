@@ -35,6 +35,7 @@ class IglesiasController  extends Controller
        ->join('ciudades','iglesias.idciudad', '=', 'ciudades.id')
        ->whereNull('iglesias.deleted_at')
        ->select(DB::raw('iglesias.id as iglesiaid, iglesias.nombre as nombreiglesia,iglesias.direccion direccioniglesia,ciudades.nombreciudad as ciudadiglesia,ciudades.idciudad as ciudadid,ciudades.id as idci'))
+       ->orderBy('iglesias.id', 'desc')
        ->get();
         return response() -> json([$iglesia], 200);
     }

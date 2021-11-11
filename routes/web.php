@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 });
 
 
-    $router->post('/users/login', ['uses' => 'UsersController@getToken']);
+    $router::post('/users/login', ['uses' => 'UsersController@getToken']);
   //$router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('/user/show', ['uses' => 'UsersController@index' ]);
     $router->get('/user/showRole', ['uses' => 'UsersController@getroleuser' ]);

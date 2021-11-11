@@ -34,6 +34,7 @@ class SalasController  extends Controller
         ->join('sedes','salas.sedeid','=','sedes.id')
         ->whereNull('salas.deleted_at')
         ->select(DB::raw('salas.id as salaid, salas.nombresala as nombresala, salas.direccionip as direccionip, sedes.id as sedeid,sedes.nombresede as nombresede'))
+        ->orderBy('salas.id', 'desc')
         ->get();
         return response() -> json([$sala], 200);
     }

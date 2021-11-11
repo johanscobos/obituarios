@@ -43,21 +43,23 @@ class ObituariosController  extends Controller
         ->join('ciudades','obituarios.idciudad','=','ciudades.id')
         ->whereNull('obituarios.deleted_at')
         ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, sedes.direccion as direccionsede,salas.nombresala,salas.id as salaid, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,iglesias.idciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion ,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio, ciudades.nombreciudad as ciudadobituario,ciudades.idciudad as idciudad, ciudades.id as ciud'))
+        ->orderBy('obituarios.id', 'desc')
         ->get();
         return response() -> json([$obituario],200);
     }
     public function showObituariosHome(){
-        $date = Carbon::now()->toDateTimeString();
+        $date = Carbon::now()->toDateString();
 
         $obituario = DB::table('obituarios') 
-        ->where('finpublicacion', '>' , $date)
         ->join('sedes','obituarios.sedeid', '=', 'sedes.id')
         ->join('salas','obituarios.salaid', '=', 'salas.id')
         ->join('iglesias','obituarios.iglesiaid', '=', 'iglesias.id')
         ->join('cementerios','obituarios.cementerioid', '=', 'cementerios.id')
         ->join('ciudades','obituarios.idciudad','=','ciudades.id')
-        ->whereNull('obituarios.deleted_at')
+        ->where('obituarios.finpublicacion', '>=' , $date)
+        ->whereNull('obituarios.deleted_at')      
         ->select(DB::raw('obituarios.id as idobituario,obituarios.nombre as nombreobituario,obituarios.apellidos as apellidosobituario,obituarios.mensaje as mensajeobituario, sedes.nombresede,sedes.id as sedeid, sedes.direccion as direccionsede,salas.nombresala,salas.id as salaid,salas.direccionip as direccionip, iglesias.nombre as nombreiglesia,iglesias.id as iglesiaid,obituarios.horamisa,cementerios.nombre as nombrecementerio, cementerios.id as cementerioid, obituarios.horadestinofinal,obituarios.virtual,obituarios.fechaexequias,iglesias.idciudad as ciudadiglesia, obituarios.iniciopublicacion,obituarios.finpublicacion ,iglesias.direccion as direccioniglesias, cementerios.direccion as direccioncementerio, ciudades.nombreciudad as ciudadobituario,ciudades.idciudad as idciudad, ciudades.id as ciud'))
+        ->orderBy('obituarios.id', 'desc')
         ->get();
         return response() -> json([$obituario],200);
         }
